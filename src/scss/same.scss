@@ -1,0 +1,49 @@
+.button-all {
+  border: 1px solid #e9ecf5;
+  max-width: 170px;
+  width: 100%;
+  min-height: 50px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: "GT Eesti Pro Display";
+  font-size: 16px;
+  transition: all 0.5s;
+}
+
+@font-face {
+  font-family: "GT Eesti Pro Display";
+  src: url(../assets/fonts/gteestiprodisplay_regular.otf);
+}
+
+.main-page-title {
+  font-family: "GT Eesti Pro Display";
+  font-weight: 400;
+  color: #141b41;
+}
+
+.main-page-subtitle {
+  font-family: "GT Eesti Pro Display";
+  line-height: 140%;
+  color: #72727e;
+}
+
+.popup-register {
+  text-align: center;
+  z-index: 4;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all .3s;
+}
+
+.popup-partner {
+  transition: all .3s;
+  display: none;
+  z-index: 4;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
