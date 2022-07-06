@@ -50,4 +50,7 @@ export default {
   popupRegister(state) {
     return state.popupRegister;
   },
+  SHOW_MODAL(state) {
+    return state.showModal;
+  }
 }

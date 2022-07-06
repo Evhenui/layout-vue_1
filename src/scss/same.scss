@@ -1,12 +1,10 @@
 .button-all {
   border: 1px solid #e9ecf5;
-  max-width: 170px;
-  width: 100%;
-  min-height: 50px;
+  padding: 20px;
   border-radius: 6px;
   cursor: pointer;
-  font-family: "GT Eesti Pro Display";
-  font-size: 16px;
+  font-family: "GT Eesti Pro Display", sans-serif;
+  font-size: 1rem;
   transition: all 0.5s;
 }
 
@@ -27,24 +25,12 @@
   color: #72727e;
 }
 
-.popup-register {
-  text-align: center;
-  z-index: 4;
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: all .3s;
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.5s ease;
 }
 
-
-.popup-partner {
-  transition: all .3s;
-  display: none;
-  z-index: 4;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
 }

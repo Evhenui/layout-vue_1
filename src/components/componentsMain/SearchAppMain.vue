@@ -1,5 +1,5 @@
 <template>
-  <div class="container-search-block">
+  <section class="container-search-block">
     <div class="container-search-block__wrapper-left">
       <div class="container-search-block__main-text">
         <h1 class="main-page-title">{{ $store.state.searchTextMain }}</h1>
@@ -20,54 +20,46 @@
       <div class="container-search-block__sub-main-text">
         <p class="main-page-subtitle">{{ $store.state.searchTextSubMain }}</p>
       </div>
-      <button class="button-all btn-search-block" @click="popupMenuRegister">
+      <button class="button-all btn-search-block" @click="modalRegisterOpen">
         {{ $store.state.searchButtonName }}
       </button>
     </div>
-    <figure class="container-search-block__wpapper-img">
-      <img 
-      src="@/assets/iPhoneSearchImg.png" 
-      alt="curtains"
-      width="592" 
-      height="589"
+    <div class="container-search-block__wpapper-img">
+      <img
+        src="@/assets/iPhoneSearchImg.png"
+        alt="curtains"
+        width="592"
+        height="589"
       />
-    </figure>
-    <figure class="container-search-block__wpapper-img-smart">
+    </div>
+    <div class="container-search-block__wpapper-img-smart">
       <img
         src="@/assets/iPhone-search-smart.png"
         width="320"
         height="260"
-        alt="cirtans"
+        alt="curtains"
       />
-    </figure>
-    <PopupMenuRegister
-      class="popup-register popup-register-mobile"
-      :style="{ display: menuRegister }"
-      @popupClose="popupMenuRegister"
-    />
-  </div>
+    </div>
+    <transition name="modal">
+      <Register v-if="SHOW_MODAL.modalRegister" @close="modalRegisterClose" />
+    </transition>
+  </section>
 </template>
 
 <script>
-import PopupMenuRegister from "./PopupMenuRegister.vue";
+import Register from "../Popup/Register.vue";
+import Popup from "../Popup/Popup.vue";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "SearchMainApp",
-  components: { PopupMenuRegister },
+  components: { Register, Popup },
   data() {
     return {
-      active: false,
-      menuRegister: "none",
+      active: false
     };
   },
-  methods: {
-    popupMenuRegister() {
-      if (this.menuRegister === "block") {
-        this.menuRegister = "none";
-      } else {
-        this.menuRegister = "block";
-      }
-    },
-  },
+  computed: { ...mapGetters(["SHOW_MODAL"]) },
+  methods: { ...mapMutations(["modalRegisterClose", "modalRegisterOpen"]) },
 };
 </script>
 
@@ -133,10 +125,10 @@ export default {
     padding: 60px 10px 0 10px;
     text-align: center;
     flex-direction: column;
-     .popup-register-mobile {
-        top: 20%;
-        left: 0;
-        transform: translate(0%, 0%);
+    .popup-register-mobile {
+      top: 20%;
+      left: 0;
+      transform: translate(0%, 0%);
     }
     &__main-text {
       padding: 0 30px 0 30px;

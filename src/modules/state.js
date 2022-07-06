@@ -130,4 +130,7 @@ export default {
     loginInput: "Придумайте имя",
     passInput: "Придумайте пароль",
   },
+
+  showModal: {modalLogin: false,  modalRegister: false}
+  
 };

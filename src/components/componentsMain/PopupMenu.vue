@@ -1,7 +1,7 @@
 <template>
   <div class="popup-menu">
     <header class="popup-menu__header">
-      <div class="popup-menu__btn-close" @click="popupClose"></div>
+      <div class="popup-menu__btn-close" @click="$emit('close')"></div>
     </header>
     <main class="popup-menu__main">
       <h1 class="popup-menu__title main-page-title">
@@ -116,6 +116,7 @@ export default {
 
 <style lang="scss">
 .popup-menu {
+  display: block;
   padding: 24px 24px 35px 24px;
   background-color: #fff;
   box-shadow: 0 0 5px #000, inset 0 1px 8px -2px #fff;

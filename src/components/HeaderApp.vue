@@ -31,105 +31,72 @@
           <div class="header__wrapper-burger__footer-menu">
             <button
               class="button-all header__button menu-footer-btn-top"
-              @click="popupMenuRegister"
+              @click="modalRegisterOpen"
             >
               {{ buttonHeaderName }}
             </button>
             <button
               class="button-all header__button menu-footer-btn-button"
-              @click="popupMenu"
+              @click="modalLoginOpen"
             >
               {{ stayPartnerButton }}
             </button>
           </div>
         </ul>
       </nav>
-      <button class="button-all header__button" @click="popupMenuRegister">
+      <button class="button-all header__button" @click="modalRegisterOpen">
         {{ buttonHeaderName }}
       </button>
     </div>
-    <PopupMenuRegister
-      class="popup-register popup-register-mobile"
-      :style="{ display: menuRegister }"
-      @popupClose="popupMenuRegister"
-    />
-    <PopupMenu
-      class="popup-partner header-popup"
-      :style="{ display: popMenu }"
-      @popupClose="popupMenu"
-    ></PopupMenu>
+    <transition name="modal">
+      <Login v-if="SHOW_MODAL.modalLogin" @close="modalLoginClose" />
+    </transition>
+    <transition name="modal">
+      <Register v-if="SHOW_MODAL.modalRegister" @close="modalRegisterClose" />
+    </transition>
   </div>
 </template>
 
 <script>
-import PopupMenuRegister from "./componentsMain/PopupMenuRegister.vue";
-import PopupMenu from "./componentsMain/PopupMenu.vue";
+import Register from "./Popup/Register.vue";
+import Login from "./Popup/Login.vue";
+import Popup from "./Popup/Popup.vue";
+
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "HeaderApp",
-  components: { PopupMenuRegister, PopupMenu },
+  components: { Popup, Register, Login },
   data() {
     return {
-      active: false,
-      menuRegister: "none",
-      popMenu: "none",
+      active: false
     };
   },
-  computed: {
-    buttonHeaderName() {
-      return this.$store.getters.buttonHeaderName;
-    },
-    stayPartnerButton() {
-      return this.$store.getters.stayPartnerButton;
-    },
-  },
+  computed: {...mapGetters(['buttonHeaderName', 'stayPartnerButton', 'SHOW_MODAL'])},
   methods: {
-    popupMenuRegister() {
-      if (this.menuRegister === "block") {
-        this.menuRegister = "none";
-      } else {
-        this.menuRegister = "block";
-      }
-    },
-    popupCloseI() {
-      if (this.menuRegister === "block") {
-        this.menuRegister = "none";
-      } else {
-        this.menuRegister = "block";
-      }
-    },
-    popupMenu() {
-      if (this.popMenu === "block") {
-        this.popMenu = "none";
-      } else {
-        this.popMenu = "block";
-      }
-    },
-  },
+    ...mapMutations(['modalRegisterClose', 'modalRegisterOpen', 'modalLoginClose', 'modalLoginOpen']),
+  }
 };
 </script>
 
 <style lang="scss">
-%tp{
-  color: red;
-}
 .header__wrapper-burger__footer-menu {
   display: none;
 }
 .header {
+  .popup-partner {
+    display: block;
+  }
   .header__button {
     position: relative;
     z-index: 2;
   }
-  padding: 10px 135px 0 135px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 30px;
+  padding: 2vh 9.37vw;
   position: fixed;
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 50;
+  z-index: 2;
+  box-shadow: 0 1px 8px rgb(83 109 122 / 29%);
   &::before {
     content: "";
     width: 100%;
@@ -142,9 +109,8 @@ export default {
   }
   .header__body {
     width: 100%;
-    height: 90px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     position: relative;
   }
@@ -152,7 +118,6 @@ export default {
     flex: 0 0 120px;
     overflow: hidden;
     font-size: 0;
-    margin-right: 40px;
     position: relative;
     z-index: 3;
     & > img {
@@ -165,14 +130,14 @@ export default {
     flex-wrap: wrap;
     position: relative;
     z-index: 2;
+    column-gap: 2.77vw;
     .header__menu-item {
       &:nth-child(1) {
         min-width: 140px;
       }
       font-family: "GT Eesti Pro Display";
-      font-size: 18px;
+      font-size: 1.125rem;
       color: #72727e;
-      margin-right: 60px;
       &:last-child {
         margin-right: 0;
       }
@@ -182,7 +147,7 @@ export default {
       }
     }
   }
-  .button-all {
+  &__button {
     background: white;
     color: #446df6;
     &:hover {
@@ -194,16 +159,29 @@ export default {
 .menu-footer-btn {
   display: none;
 }
+.header__wrapper-burger {
+  display: none;
+}
+@media (max-width: 1250.98px) {
+  .header {
+    padding: 2vh 2.37vw;
+  }
+}
 
-@media (max-width: 430px) {
+@media (max-width: 991.98px) {
+  .header {
+    .header__button {
+      padding: 20px 10px;
+    }
+  }
+}
+
+@media (max-width: 767.98px) {
   .header__button {
     display: none;
   }
   .header {
-    padding: 5px 25px 5px 25px;
-    position: fixed;
-    margin: 0;
-    width: 100%;
+    padding: 5vh 4.37vw;
     .popup-register-mobile {
       top: 20%;
       left: 0;
@@ -224,6 +202,7 @@ export default {
       justify-content: space-between;
     }
     .header__burger {
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
       display: block;
       position: relative;
       width: 30px;
@@ -302,13 +281,21 @@ export default {
     }
   }
   .header__wrapper-burger {
-    padding: 40px 0px 30px 30px;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    display: block;
     position: relative;
     z-index: 2;
-    border-left: 2px solid #e9ecf5;
+    &::before {
+      content: "";
+      position: absolute;
+      width: 1px;
+      height: 50px;
+      left: -5vw;
+      top: -1vh;
+      border-left: 2px solid #e9ecf5;
+    }
   }
   .header__wrapper-burger__footer-menu {
-    
     display: block;
     width: 100%;
     position: relative;
@@ -328,6 +315,12 @@ export default {
       background: #eeeeee;
       color: #446df6;
     }
+  }
+}
+
+@media (max-width: 430px) {
+  .header {
+    padding: 5vh 4.37vw;
   }
 }
 </style>

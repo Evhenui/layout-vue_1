@@ -41,21 +41,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   name: "FirstStartMain",
-  computed: {
-    startTitle() {
-      return this.$store.getters.startTitle;
-    },
-    firstStartTitleSubMenu() {
-      return this.$store.getters.firstStartTitleSubMenu;
-    },
-    firstStartSubTitleSubMenu() {
-      return this.$store.getters.firstStartSubTitleSubMenu;
-    },
-    firstStartTitles() {
-      return this.$store.getters.firstStartTitles;
-    },
+  computed: { 
+    ...mapGetters(['startTitle', 'firstStartTitleSubMenu', 'firstStartSubTitleSubMenu', 'firstStartTitles'])
   },
 };
 </script>
@@ -63,7 +53,6 @@ export default {
 <style lang="scss">
 .container-first-start {
   margin-bottom: 110px;
-
   &__title {
     margin-bottom: 50px;
     & > h1 {
@@ -106,6 +95,9 @@ export default {
       }
     }
   }
+}
+@media (max-width: 991.98px) {
+  
 }
 
 @media (max-width: 430px) {
